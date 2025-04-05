@@ -178,11 +178,11 @@ bool BleepBloop_Init(int argc, char **argv)
 	char *token = NULL, *sandbox = NULL;
 	for (i = 0; i < argc; i += 1)
 	{
-		if (SDL_strstr(argv[i], "-AUTH_PASSWORD=") != NULL)
+		if (SDL_strstr(argv[i], "-AUTH_PASSWORD=") == argv[i])
 		{
 			token = argv[i] + SDL_strlen("-AUTH_PASSWORD=");
 		}
-		else if (SDL_strstr(argv[i], "-epicsandboxid=") != NULL)
+		else if (SDL_strstr(argv[i], "-epicsandboxid=") == argv[i])
 		{
 			sandbox = argv[i] + SDL_strlen("-epicsandboxid=");
 		}
