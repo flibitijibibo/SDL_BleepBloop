@@ -1,0 +1,5 @@
+BleepBloop_Secrets.h
+*.so
+*.dylib
+*.dll
+SDK

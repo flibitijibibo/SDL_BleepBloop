@@ -1,0 +1,68 @@
+name: CI
+
+on: [push, pull_request]
+
+env:
+  SDL3_VERSION: 3.2.0
+
+jobs:
+  linux:
+    name: Steam Linux Runtime
+    runs-on: ubuntu-latest
+    container:
+      image: registry.gitlab.steamos.cloud/steamrt/sniper/sdk:beta
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: true
+    - name: Install chrpath
+      run: apt install -y chrpath
+
+    - name: Build (Release)
+      run: |
+        make
+        chrpath -d libSDL_BleepBloop.so
+        strip -S libSDL_BleepBloop.so
+
+    - name: Archive build result
+      uses: actions/upload-artifact@v4
+      with:
+        name: Steamworks-Linux
+        path: libSDL_BleepBloop.so
+
+  linux-mingw:
+    name: Fedora Linux MinGW
+    runs-on: ubuntu-latest
+    container:
+      image: fedora
+    steps:
+      - name: Install toolchain
+        run: |
+          dnf update -y
+          dnf install -y git make mingw32-gcc mingw64-gcc mingw32-SDL3 mingw64-SDL3
+
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Build 32-bit
+        run: |
+          mingw32-make
+          i686-w64-mingw32-strip -S SDL_BleepBloop.dll
+
+      - name: Archive build result 32-bit
+        uses: actions/upload-artifact@v4
+        with:
+          name: Steamworks-Win32
+          path: SDL_BleepBloop.dll
+
+      - name: Build 64-bit
+        run: |
+          mingw64-make
+          x86_64-w64-mingw32-strip -S SDL_BleepBloop.dll
+
+      - name: Archive build result 64-bit
+        uses: actions/upload-artifact@v4
+        with:
+          name: Steamworks-Win64
+          path: SDL_BleepBloop.dll
