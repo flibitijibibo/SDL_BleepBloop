@@ -46,5 +46,7 @@ steam:
 	$(CC) $(CFLAGS) -shared -o $(LIB) src/BleepBloop_Steam.c -Iinclude -lSDL3 -DBLEEPBLOOP_STEAM
 epic:
 	$(CC) $(CFLAGS) -shared -o $(LIB) src/BleepBloop_Epic.c -Iinclude -ISDK/Include -lSDL3 $(EPICLIB) -DBLEEPBLOOP_EPIC
+dummy:
+	$(CC) $(CFLAGS) -shared -o $(LIB) src/BleepBloop_Dummy.c -Iinclude -lSDL3 -DBLEEPBLOOP_DUMMY
 clean:
 	rm -f $(LIB)

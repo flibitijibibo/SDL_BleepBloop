@@ -18,9 +18,9 @@ jobs:
     - name: Install chrpath
       run: apt install -y chrpath
 
-    - name: Build (Release)
+    - name: Build Steam
       run: |
-        make
+        make steam
         chrpath -d libSDL_BleepBloop.so
         strip -S libSDL_BleepBloop.so
 
@@ -28,6 +28,18 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: Steamworks-Linux
+        path: libSDL_BleepBloop.so
+
+    - name: Build Dummy
+      run: |
+        make dummy
+        chrpath -d libSDL_BleepBloop.so
+        strip -S libSDL_BleepBloop.so
+
+    - name: Archive build result
+      uses: actions/upload-artifact@v4
+      with:
+        name: Dummy-Linux
         path: libSDL_BleepBloop.so
 
   linux-mingw:
@@ -45,9 +57,9 @@ jobs:
         with:
           submodules: true
 
-      - name: Build 32-bit
+      - name: Build Steam 32-bit
         run: |
-          mingw32-make
+          mingw32-make steam
           i686-w64-mingw32-strip -S SDL_BleepBloop.dll
 
       - name: Archive build result 32-bit
@@ -56,13 +68,35 @@ jobs:
           name: Steamworks-Win32
           path: SDL_BleepBloop.dll
 
-      - name: Build 64-bit
+      - name: Build Steam 64-bit
         run: |
-          mingw64-make
+          mingw64-make steam
           x86_64-w64-mingw32-strip -S SDL_BleepBloop.dll
 
       - name: Archive build result 64-bit
         uses: actions/upload-artifact@v4
         with:
           name: Steamworks-Win64
+          path: SDL_BleepBloop.dll
+
+      - name: Build Dummy 32-bit
+        run: |
+          mingw32-make dummy
+          i686-w64-mingw32-strip -S SDL_BleepBloop.dll
+
+      - name: Archive build result 32-bit
+        uses: actions/upload-artifact@v4
+        with:
+          name: Dummy-Win32
+          path: SDL_BleepBloop.dll
+
+      - name: Build Dummy 64-bit
+        run: |
+          mingw64-make dummy
+          x86_64-w64-mingw32-strip -S SDL_BleepBloop.dll
+
+      - name: Archive build result 64-bit
+        uses: actions/upload-artifact@v4
+        with:
+          name: Dummy-Win64
           path: SDL_BleepBloop.dll
