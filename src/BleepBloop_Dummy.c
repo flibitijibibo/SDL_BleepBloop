@@ -28,10 +28,6 @@
 
 #include <SDL_BleepBloop.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
-
 bool BleepBloop_Init(int argc, char **argv)
 {
 	SDL_Log("BleepBloop_Init");
