@@ -141,13 +141,26 @@ void BleepBloop_UpdateAchievement(const char *id, Sint32 current, Sint32 target)
 {
 	if (refcount > 0)
 	{
-		XblAchievementsUpdateAchievementAsync(
-			xblHandle,
-			xboxUserId,
-			id,
-			(uint32_t) SDL_floorf(((float) current / (float) target) * 100.0f),
-			CreateAsync()
-		);
+		int i;
+		for (i = 0; i < SDL_arraysize(BLEEPBLOOP_SECRET_ACHIEVEMENT_NAMES); i += 1)
+		{
+			if (SDL_strcmp(id, BLEEPBLOOP_SECRET_ACHIEVEMENT_NAMES[i]) == 0)
+			{
+				break;
+			}
+		}
+		if (i < SDL_arraysize(BLEEPBLOOP_SECRET_ACHIEVEMENT_NAMES))
+		{
+			char idString[4]; /* Arbitrarily 3 digits plus null terminator */
+			SDL_snprintf(idString, sizeof(idString), "%d", i + 1);
+			XblAchievementsUpdateAchievementAsync(
+				xblHandle,
+				xboxUserId,
+				idString,
+				(uint32_t) SDL_floorf(((float) current / (float) target) * 100.0f),
+				CreateAsync()
+			);
+		}
 	}
 }
 
