@@ -169,12 +169,12 @@ void BleepBloop_Quit(void)
 		{
 			return;
 		}
+
+		SDL_assert(refcount == 0);
+
+		SteamAPI_Shutdown();
+		SDL_UnloadObject(steam_api);
 	}
-
-	SDL_assert(refcount == 0);
-
-	SteamAPI_Shutdown();
-	SDL_UnloadObject(steam_api);
 }
 
 void BleepBloop_Update(void)

@@ -118,12 +118,12 @@ void BleepBloop_Quit(void)
 		{
 			return;
 		}
+
+		SDL_assert(refcount == 0);
+
+		XblContextCloseHandle(xblHandle);
+		XblCleanupAsync(CreateAsync());
 	}
-
-	SDL_assert(refcount == 0);
-
-	XblContextCloseHandle(xblHandle);
-	XblCleanupAsync(CreateAsync());
 }
 
 void BleepBloop_Update(void)

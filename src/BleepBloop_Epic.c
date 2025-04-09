@@ -282,29 +282,29 @@ void BleepBloop_Quit(void)
 		{
 			return;
 		}
+
+		SDL_assert(refcount == 0);
+
+		SDL_Log("EOS SDK - Shutdown");
+
+		if (eosAccount != NULL)
+		{
+			EOS_Auth_LogoutOptions logoutOptions;
+			logoutOptions.ApiVersion = EOS_AUTH_LOGOUT_API_LATEST;
+			logoutOptions.LocalUserId = eosAccount;
+			EOS_Auth_Logout(
+				EOS_Platform_GetAuthInterface(eosHandle),
+				&logoutOptions,
+				NULL,
+				OnLogout
+			);
+			eosAccount = NULL;
+		}
+
+		EOS_Platform_Release(eosHandle);
+		EOS_Shutdown();
+		eosUser = NULL;
 	}
-
-	SDL_assert(refcount == 0);
-
-	SDL_Log("EOS SDK - Shutdown");
-
-	if (eosAccount != NULL)
-	{
-		EOS_Auth_LogoutOptions logoutOptions;
-		logoutOptions.ApiVersion = EOS_AUTH_LOGOUT_API_LATEST;
-		logoutOptions.LocalUserId = eosAccount;
-		EOS_Auth_Logout(
-			EOS_Platform_GetAuthInterface(eosHandle),
-			&logoutOptions,
-			NULL,
-			OnLogout
-		);
-		eosAccount = NULL;
-	}
-
-	EOS_Platform_Release(eosHandle);
-	EOS_Shutdown();
-	eosUser = NULL;
 }
 
 void BleepBloop_Update(void)
