@@ -2,15 +2,12 @@ name: CI
 
 on: [push, pull_request]
 
-env:
-  SDL3_VERSION: 3.2.0
-
 jobs:
   linux:
     name: Steam Linux Runtime
     runs-on: ubuntu-latest
     container:
-      image: registry.gitlab.steamos.cloud/steamrt/sniper/sdk:beta
+      image: registry.gitlab.steamos.cloud/steamrt/sniper/sdk:latest
     steps:
     - uses: actions/checkout@v4
       with:
@@ -40,6 +37,42 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: Dummy-Linux
+        path: libSDL_BleepBloop.so
+
+  linux-aarch64:
+    name: Steam Linux Runtime (AArch64)
+    runs-on: ubuntu-latest
+    container:
+      image: registry.gitlab.steamos.cloud/steamrt/sniper/sdk/arm64:latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: true
+    - name: Install chrpath
+      run: apt install -y chrpath
+
+    - name: Build Steam
+      run: |
+        make steam
+        chrpath -d libSDL_BleepBloop.so
+        strip -S libSDL_BleepBloop.so
+
+    - name: Archive build result
+      uses: actions/upload-artifact@v4
+      with:
+        name: Steamworks-Linux-AArch64
+        path: libSDL_BleepBloop.so
+
+    - name: Build Dummy
+      run: |
+        make dummy
+        chrpath -d libSDL_BleepBloop.so
+        strip -S libSDL_BleepBloop.so
+
+    - name: Archive build result
+      uses: actions/upload-artifact@v4
+      with:
+        name: Dummy-Linux-AArch64
         path: libSDL_BleepBloop.so
 
   linux-mingw:
