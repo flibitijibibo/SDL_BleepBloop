@@ -46,6 +46,8 @@ steam:
 	$(CC) $(CFLAGS) -shared -o $(LIB) src/BleepBloop_Steam.c -Iinclude -lSDL3 -DBLEEPBLOOP_STEAM
 epic:
 	$(CC) $(CFLAGS) -shared -o $(LIB) src/BleepBloop_Epic.c -Iinclude -ISDK/Include -lSDL3 $(EPICLIB) -DBLEEPBLOOP_EPIC
+stove:
+	$(CC) $(CFLAGS) -shared -o $(LIB) src/BleepBloop_STOVE.c -Iinclude -ISTOVE/include -lSDL3 STOVE/bin/x64/Release/StovePCSDK.dll -DBLEEPBLOOP_STOVE
 dummy:
 	$(CC) $(CFLAGS) -shared -o $(LIB) src/BleepBloop_Dummy.c -Iinclude -lSDL3 -DBLEEPBLOOP_DUMMY
 clean:
