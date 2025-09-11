@@ -306,7 +306,7 @@
       <AdditionalDependencies>..\..\SDL\VisualC-GDK\Gaming.Desktop.x64\Release\SDL3.lib;Appnotify.lib;winhttp.lib;crypt32.lib;xgameruntime.lib;..\Microsoft.Xbox.Services.GDK.C.Thunks.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ClCompile>
-      <PreprocessorDefinitions>BLEEPBLOOP_XBL;_GAMING_DESKTOP;WINAPI_FAMILY=WINAPI_FAMILY_DESKTOP_APP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BLEEPBLOOP_XBL;NDEBUG;_LIB;_GAMING_DESKTOP;WINAPI_FAMILY=WINAPI_FAMILY_DESKTOP_APP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Gaming.Desktop.x64'">
@@ -314,7 +314,7 @@
       <AdditionalDependencies>..\..\SDL\VisualC-GDK\Gaming.Desktop.x64\Debug\SDL3.lib;Appnotify.lib;winhttp.lib;crypt32.lib;xgameruntime.lib;..\Microsoft.Xbox.Services.GDK.C.Thunks.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ClCompile>
-      <PreprocessorDefinitions>BLEEPBLOOP_XBL;_GAMING_DESKTOP;WINAPI_FAMILY=WINAPI_FAMILY_DESKTOP_APP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BLEEPBLOOP_XBL;_DEBUG;_LIB;_GAMING_DESKTOP;WINAPI_FAMILY=WINAPI_FAMILY_DESKTOP_APP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Gaming.Desktop.x64'">
@@ -322,7 +322,7 @@
       <AdditionalDependencies>..\..\SDL\VisualC-GDK\Gaming.Desktop.x64\Profile\SDL3.lib;Appnotify.lib;winhttp.lib;crypt32.lib;xgameruntime.lib;..\Microsoft.Xbox.Services.GDK.C.Thunks.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ClCompile>
-      <PreprocessorDefinitions>BLEEPBLOOP_XBL;_GAMING_DESKTOP;WINAPI_FAMILY=WINAPI_FAMILY_DESKTOP_APP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BLEEPBLOOP_XBL;NDEBUG;_LIB;PROFILE;_GAMING_DESKTOP;WINAPI_FAMILY=WINAPI_FAMILY_DESKTOP_APP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
