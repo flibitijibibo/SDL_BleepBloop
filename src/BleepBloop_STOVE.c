@@ -33,9 +33,36 @@
 
 static uint64_t refcount = 0;
 
+static void StoveForceExit(const char *msg)
+{
+	SDL_Event evt;
+	evt.type = SDL_EVENT_QUIT;
+	evt.quit.reserved = 0;
+	evt.quit.timestamp = SDL_GetTicksNS();
+
+	SDL_ShowSimpleMessageBox(
+		SDL_MESSAGEBOX_ERROR,
+		"STOVE SDK Error",
+		msg,
+		NULL
+	);
+	SDL_PushEvent(&evt);
+}
+
 static void OnError(const StovePCError error)
 {
+	char msg[1024];
 	SDL_Log("STOVE Error Code %d: %s", error.result, error.message);
+	SDL_snprintf(
+		msg,
+		sizeof(msg),
+		"The STOVE SDK has encountered and error and wants to exit."
+			"\n\nCode: %d"
+			"\n\nMessage: %s",
+		error.result,
+		error.message
+	);
+	StoveForceExit(msg);
 }
 
 static void OnInitComplete()
@@ -89,6 +116,7 @@ bool BleepBloop_Init(int argc, char **argv)
 	if (result != STOVE_PC_NO_ERROR)
 	{
 		SDL_Log("STOVE failed to initialize: %d", result);
+		StoveForceExit("STOVE failed to initialize and has requested termination.");
 		return false;
 	}
 
